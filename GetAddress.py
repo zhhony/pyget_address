@@ -1,7 +1,9 @@
+import json
+import requests
+
+
 def GetAddrSug(query: str, ak: str, region: str = '北京市') -> list:
     """根据提供的地区关键字，以及地区权重，获取推荐的地区名称清单"""
-    import json
-    import requests
 
     http = 'https://api.map.baidu.com/place/v2/suggestion?'
     output = 'json'
@@ -20,8 +22,6 @@ def GetAddrSug(query: str, ak: str, region: str = '北京市') -> list:
 
 def GetLatitude(address: str, ak: str, region: str = '北京市'):
     '''根据提供的地址返回对应的经纬度'''
-    import json
-    import requests
 
     http = 'https://api.map.baidu.com/geocoding/v3/?'
     output = 'json'
@@ -41,8 +41,6 @@ def GetLatitude(address: str, ak: str, region: str = '北京市'):
 
 def GetAddress(query: str, tag: str, ak: str, region: str = '北京市', type='address'):
     '''type:address详细地区、province省、city市、area区、location经纬度、all全部信息'''
-    import json
-    import requests
 
     http = 'https://api.map.baidu.com/place/v2/search?'
     output = 'json'
@@ -67,8 +65,6 @@ def GetAddress(query: str, tag: str, ak: str, region: str = '北京市', type='a
 
 
 def GetGeocode(location_lat, location_lng, ak):
-    import json
-    import requests
 
     http = 'https://api.map.baidu.com/reverse_geocoding/v3/?'
     output = 'json'
