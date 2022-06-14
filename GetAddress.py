@@ -1,7 +1,7 @@
 import json
 import requests
-from timestamp import TimeStamp
-from config import Config
+from pytimestamp import TimeStamp
+from pyconfig import Config
 
 
 # 载入全局参数
@@ -69,8 +69,9 @@ def GetSearch(query: str, tag: str, region: str = '北京市') -> any:
     reJson = re.text.encode('utf-8')
     reJsoexinDict = json.loads(reJson)
     if reJsoexinDict['status'] == 0 and reJsoexinDict['total'] > 0:
-        with open(conf.getLog +'\\'+ 'GetSearch_' + TimeStamp() + '.json','w') as file:
-            file.write(json.dumps(reJsoexinDict['results']))
+        with open(conf.getLog + 'GetSearch_' + TimeStamp() + '.json', 'w') as file:
+            file.write(json.dumps(
+                reJsoexinDict['results'], ensure_ascii=False, sort_keys=False, indent=True))
         return reJsoexinDict['results']
     else:
         return '无法查询到详细信息'
