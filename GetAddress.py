@@ -68,6 +68,8 @@ def GetSearch(query: str, tag: str, region: str = '北京市') -> any:
     reJson = re.text.encode('utf-8')
     reJsoexinDict = json.loads(reJson)
     if reJsoexinDict['status'] == 0 and reJsoexinDict['total'] > 0:
+        with open(conf.getLog +'\\'+ 'GetSearch_' + TimeStamp() + '.json','w') as file:
+            file.write(json.dumps(reJsoexinDict['results']))
         return reJsoexinDict['results']
     else:
         return '无法查询到详细信息'
