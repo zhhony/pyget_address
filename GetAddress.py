@@ -5,7 +5,7 @@ from pyconfig import Config
 
 
 # 载入全局参数
-conf = Config('D:\\workdata\\pyget_address\\config.json')
+conf = Config('..\\workdata\\pyget_address\\config.json')
 
 
 def GetSuggest(query: str, region: str = '北京市') -> list:
