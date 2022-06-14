@@ -1,10 +1,10 @@
 import json
 import requests
-import config
+from config import Config
 
 
 # 载入全局参数
-conf = config.Config('D:\\workdata\\pyget_address\\config\config.json')
+conf = Config('D:\\workdata\\pyget_address\\config.json')
 
 
 def GetAddrSug(query: str, region: str = '北京市') -> list:
@@ -19,7 +19,7 @@ def GetAddrSug(query: str, region: str = '北京市') -> list:
     s = requests.session()
     re = s.post(https)
     reJson = re.text.encode('utf8')
-    reJsonDict = json.load(reJson)
+    reJsonDict = json.loads(reJson)
     reJsinDictAdr = []
     for i in reJsonDict['result']:
         reJsinDictAdr.append(i['name'])
