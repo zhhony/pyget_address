@@ -1,5 +1,57 @@
 import json
 import requests
+import pyjson_withcommit
+
+
+# 新增配置类，读取本地配置
+class Config:
+    def __init__(self, configPath: str) -> None:
+        config = pyjson_withcommit.LoadJson(configPath)
+        self.__geocode = config['http']['geocode']
+        self.__suggestion = config['http']['suggestion']
+        self.__search = config['http']['search']
+        self.__reverse_geocode = config['http']['reverse_geocode']
+        self.__output = config['output']
+        self.__scope = config['scope']
+        self.__page_size = config['page_size']
+        self.__photo_show = config['photo_show']
+        self.__extensions_town = config['extensions_town']
+
+    @property
+    def getGeocode(self):
+        return self.__geocode
+
+    @property
+    def getSuggestion(self):
+        return self.__suggestion
+
+    @property
+    def getsearch(self):
+        return self.__search
+
+    @property
+    def getReverseGeocode(self):
+        return self.__reverse_geocode
+
+    @property
+    def getOutput(self):
+        return self.__output
+
+    @property
+    def getScope(self):
+        return self.__scope
+
+    @property
+    def getPageSize(self):
+        return self.__page_size
+
+    @property
+    def getPhotoShow(self):
+        return self.__photo_show
+
+    @property
+    def getExtensions_Town(self):
+        return self.__extensions_town
 
 
 def GetAddrSug(query: str, ak: str, region: str = '北京市') -> list:
