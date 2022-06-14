@@ -1,5 +1,6 @@
 import json
 import requests
+from timestamp import TimeStamp
 from config import Config
 
 
@@ -7,7 +8,7 @@ from config import Config
 conf = Config('D:\\workdata\\pyget_address\\config.json')
 
 
-def GetAddrSuggest(query: str, region: str = '北京市') -> list:
+def GetSuggest(query: str, region: str = '北京市') -> list:
     """根据提供的地区关键字，以及地区权重，获取推荐的地区名称清单"""
 
     http = conf.getSuggestion
@@ -26,7 +27,7 @@ def GetAddrSuggest(query: str, region: str = '北京市') -> list:
     return reJsinDictAdr
 
 
-def GetAddrLatitude(address: str,  region: str = '北京市'):
+def GetLatitude(address: str,  region: str = '北京市') -> any:
     """根据提供的地址返回对应的经纬度"""
 
     http = conf.getGeocode
@@ -46,7 +47,7 @@ def GetAddrLatitude(address: str,  region: str = '北京市'):
     return results
 
 
-def GetAddrSearch(query: str, tag: str, region: str = '北京市') -> any:
+def GetSearch(query: str, tag: str, region: str = '北京市') -> any:
     """query:搜索关键字，如天安门
     tag:分类偏好，如美食
     regin:行政区域划分，如北京市
@@ -72,7 +73,7 @@ def GetAddrSearch(query: str, tag: str, region: str = '北京市') -> any:
         return '无法查询到详细信息'
 
 
-def GetAddrGeocode(location_lat: float, location_lng: float) -> str:
+def GetGeocode(location_lat: float, location_lng: float) -> str:
 
     http = conf.getReverseGeocode
     output = conf.getOutput
