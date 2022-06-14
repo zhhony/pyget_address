@@ -50,7 +50,7 @@ def GetLatitude(address: str,  city: str = '北京市') -> any:
 
 
 def GetSearch(query: str, tag: str, region: str = '北京市') -> any:
-    """本函数用于获取详细的搜索结果。结果将保存自config文件所配置的log路径中
+    """本函数用于获取详细的搜索结果。结果将保存自config文件所配置的log路径中。注意，本函数最多能查询150条记录，但是受限于篇幅，将仅仅转存前20条记录。
     query:搜索关键字，如天安门
     tag:分类偏好，如美食
     regin:行政区域划分，如北京市
@@ -60,27 +60,30 @@ def GetSearch(query: str, tag: str, region: str = '北京市') -> any:
     output = conf.getOutput
     scope = conf.getScope
     pageSize = conf.getPageSize
+    pageNum = conf.getPageNum
     photoShow = conf.getPhotoShow
     ak = conf.getAK
     https = http + 'query=' + query + '&tag=' + tag + '&region=' + region + '&output=' + output + \
-        '&scope=' + scope + '&page_size=' + pageSize + \
+        '&scope=' + scope + '&page_size=' + pageSize + '&page_num=' + pageNum +\
         '&photo_show=' + photoShow + '&ak=' + ak
 
     s = requests.Session()
     re = s.get(https)
     reJson = re.text.encode('utf-8')
     reJsoexinDict = json.loads(reJson)
-    if reJsoexinDict['status'] == 0 and reJsoexinDict['total'] > 0:
+
+    total = reJsoexinDict['total']  # 总记录数
+    if reJsoexinDict['status'] == 0 and total > 0:
         with open(conf.getLog + 'GetSearch_' + TimeStamp() + '.json', 'w') as file:
             file.write(json.dumps(
                 reJsoexinDict['results'], ensure_ascii=False, sort_keys=False, indent=True))
-        return reJsoexinDict['results']
+        return '共返回 %s 条记录' % total
     else:
         return '无法查询到详细信息'
 
 
 def GetGeocode(location_lat: float, location_lng: float) -> str:
-    """本函数用于利用提供的经纬度获取相应的地理信息并返回格式化地址信息。详细结果将保存在config文件所配置的log路径中。\n
+    """本函数用于利用提供的经纬度获取相应的地理信息并返回格式化地址信息（省、市、区&县、镇&路）。详细结果将保存在config文件所配置的log路径中。\n
     全球逆地理编码服务是一类Web API接口服务；逆地理编码服务提供将坐标点（经纬度）转换为对应位置信息（如所在行政区划，周边地标点分布）功能。服务同时支持全球行政区划位置描述及周边地标POI数据召回（包括中国在内的全球200多个国家地区）
     """
 
