@@ -3,7 +3,7 @@ import requests
 import pyjson_withcommit
 
 
-# 新增配置类，读取本地配置
+# 新增参数类，读取本地全局参数
 class Config:
     def __init__(self, configPath: str) -> None:
         CONFIG = pyjson_withcommit.LoadJson(configPath)
@@ -16,49 +16,59 @@ class Config:
         self.__page_size = CONFIG['page_size']
         self.__photo_show = CONFIG['photo_show']
         self.__extensions_town = CONFIG['extensions_town']
+        self.__ak = CONFIG['ak']
 
     @property
-    def getGeocode(self):
+    def getGeocode(self) -> str:
         return self.__geocode
 
     @property
-    def getSuggestion(self):
+    def getSuggestion(self) -> str:
         return self.__suggestion
 
     @property
-    def getsearch(self):
+    def getsearch(self) -> str:
         return self.__search
 
     @property
-    def getReverseGeocode(self):
+    def getReverseGeocode(self) -> str:
         return self.__reverse_geocode
 
     @property
-    def getOutput(self):
+    def getOutput(self) -> str:
         return self.__output
 
     @property
-    def getScope(self):
+    def getScope(self) -> str:
         return self.__scope
 
     @property
-    def getPageSize(self):
+    def getPageSize(self) -> str:
         return self.__page_size
 
     @property
-    def getPhotoShow(self):
+    def getPhotoShow(self) -> str:
         return self.__photo_show
 
     @property
-    def getExtensions_Town(self):
+    def getExtensions_Town(self) -> str:
         return self.__extensions_town
 
+    @property
+    def getAK(self) -> str:
+        return self.__ak
 
-def GetAddrSug(query: str, ak: str, region: str = '北京市') -> list:
+
+# 载入全局参数
+conf = Config('D:\\workdata\\pyget_address\\config\config.json')
+
+
+def GetAddrSug(query: str, region: str = '北京市') -> list:
     """根据提供的地区关键字，以及地区权重，获取推荐的地区名称清单"""
 
-    http = 'https://api.map.baidu.com/place/v2/suggestion?'
-    output = 'json'
+    http = conf.getSuggestion
+    output = conf.getOutput
+    ak = conf.getAK
     https = http + 'query=' + query + '&region=' + \
         region + '&output=' + output+'&ak='+ak
 
@@ -72,11 +82,12 @@ def GetAddrSug(query: str, ak: str, region: str = '北京市') -> list:
     return reJsinDictAdr
 
 
-def GetLatitude(address: str, ak: str, region: str = '北京市'):
+def GetLatitude(address: str,  region: str = '北京市'):
     '''根据提供的地址返回对应的经纬度'''
 
-    http = 'https://api.map.baidu.com/geocoding/v3/?'
-    output = 'json'
+    http = conf.getGeocode
+    output = conf.getOutput
+    ak = conf.getAK
     https = http + 'address=' + address + '&output=' + output + '&ak=' + ak
 
     s = requests.session()
