@@ -27,7 +27,7 @@ def GetAddrSug(query: str, region: str = '北京市') -> list:
 
 
 def GetLatitude(address: str,  region: str = '北京市'):
-    '''根据提供的地址返回对应的经纬度'''
+    """根据提供的地址返回对应的经纬度"""
 
     http = conf.getGeocode
     output = conf.getOutput
@@ -46,8 +46,11 @@ def GetLatitude(address: str,  region: str = '北京市'):
     return results
 
 
-def GetAddress(query: str, tag: str, region: str = '北京市', type='address'):
-    '''type:address详细地区、province省、city市、area区、location经纬度、all全部信息'''
+def GetAddress(query: str, tag: str, region: str = '北京市') -> any:
+    """query:搜索关键字，如天安门
+    tag:分类偏好，如美食
+    regin:行政区域划分，如北京市
+    """
 
     http = conf.getsearch
     output = conf.getOutput
@@ -64,15 +67,12 @@ def GetAddress(query: str, tag: str, region: str = '北京市', type='address'):
     reJson = re.text.encode('utf-8')
     reJsoexinDict = json.loads(reJson)
     if reJsoexinDict['status'] == 0 and reJsoexinDict['total'] > 0:
-        if type == 'all':
-            return reJsoexinDict
-        else:
-            return reJsoexinDict['results'][0][type]
+        return reJsoexinDict['results']
     else:
         return '无法查询到详细信息'
 
 
-def GetGeocode(location_lat, location_lng):
+def GetGeocode(location_lat: float, location_lng: float) -> str:
 
     http = conf.getReverseGeocode
     output = conf.getOutput
