@@ -27,23 +27,25 @@ def GetSuggest(query: str, region: str = '北京市') -> list:
     return reJsinDictAdr
 
 
-def GetLatitude(address: str,  region: str = '北京市') -> any:
+def GetLatitude(address: str,  city: str = '北京市') -> any:
     """根据提供的地址返回对应的经纬度"""
 
     http = conf.getGeocode
     output = conf.getOutput
     ak = conf.getAK
-    https = http + 'address=' + address + '&output=' + output + '&ak=' + ak
+    https = http + 'address=' + address + '&output=' + \
+        output + '&ak=' + ak + '&city=' + city
 
     s = requests.session()
     re = s.get(https)
     reJson = re.text.encode('utf8')
     reJsonDict = json.loads(reJson)
     results = reJsonDict['result']['location']
-    results['precise'] = reJsonDict['result']['precise']
-    results['confidence'] = reJsonDict['result']['confidence']
+    results['precise'] = reJsonDict['result']['precise']  # 1表示精确，0表示模糊
+    results['confidence'] = reJsonDict['result']['confidence']  # 打点误差范围
+    # 服务器对地址的理解程度0-100，100表示完全理解
     results['comprehension'] = reJsonDict['result']['comprehension']
-    results['level'] = reJsonDict['result']['level']
+    results['level'] = reJsonDict['result']['level']  # 理解出来的地址类型
     return results
 
 
