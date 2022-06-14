@@ -9,6 +9,7 @@ class Config:
         self.__suggestion = CONFIG['http']['suggestion']
         self.__search = CONFIG['http']['search']
         self.__reverseGeocode = CONFIG['http']['reverse_geocode']
+        self.__driving = CONFIG['http']['driving']        
         self.__output = CONFIG['output']
         self.__scope = CONFIG['scope']
         self.__pageSize = CONFIG['page_size']
@@ -17,6 +18,8 @@ class Config:
         self.__ak = CONFIG['ak']
         self.__log = CONFIG['log']
         self.__pageNum = CONFIG['page_num']
+        self.__cartype = CONFIG['cartype']
+        
 
     @property
     def getGeocode(self) -> str:
@@ -65,3 +68,11 @@ class Config:
     @property
     def getPageNum(self) -> str:
         return self.__pageNum
+
+    @property
+    def getDriving(self) -> str:
+        return self.__driving
+
+    @property
+    def getCartype(self) -> str:
+        return self.__cartype
