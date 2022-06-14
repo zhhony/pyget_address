@@ -48,7 +48,8 @@ def GetLatitude(address: str,  region: str = '北京市') -> any:
 
 
 def GetSearch(query: str, tag: str, region: str = '北京市') -> any:
-    """query:搜索关键字，如天安门
+    """本函数用于获取详细的搜索结果。结果将保存自config文件所配置的路径中
+    query:搜索关键字，如天安门
     tag:分类偏好，如美食
     regin:行政区域划分，如北京市
     """
