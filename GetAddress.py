@@ -1,6 +1,6 @@
 import json
 import requests
-from modules import *
+from . modules import *
 
 
 # 载入全局参数
