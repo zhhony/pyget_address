@@ -1,2 +1,2 @@
 from . import GetAddress
-from .GetAddress import *
+from . GetAddress import *

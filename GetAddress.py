@@ -1,7 +1,6 @@
 import json
 import requests
-from .pytimestamp import TimeStamp
-from .pyconfig import Config
+from modules import *
 
 
 # 载入全局参数
