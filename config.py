@@ -15,6 +15,7 @@ class Config:
         self.__photo_show = CONFIG['photo_show']
         self.__extensions_town = CONFIG['extensions_town']
         self.__ak = CONFIG['ak']
+        self.__log = CONFIG['log']
 
     @property
     def getGeocode(self) -> str:
@@ -55,3 +56,7 @@ class Config:
     @property
     def getAK(self) -> str:
         return self.__ak
+
+    @property
+    def getLog(self) -> str:
+        return self.__log
