@@ -1,11 +1,11 @@
 import json
 import requests
-from pytimestamp import TimeStamp
-from pyconfig import Config
+from .pytimestamp import TimeStamp
+from .pyconfig import Config
 
 
 # 载入全局参数
-conf = Config('..\\workdata\\pyget_address\\config.json')
+conf = Config('D:\\workdata\\pyget_address\\config.json')
 
 
 def GetSuggest(query: str, region: str = '北京市') -> list:
