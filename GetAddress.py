@@ -50,7 +50,7 @@ def GetLatitude(address: str,  city: str = '北京市') -> any:
 
 
 def GetSearch(query: str, tag: str, region: str = '北京市') -> any:
-    """本函数用于获取详细的搜索结果。结果将保存自config文件所配置的路径中
+    """本函数用于获取详细的搜索结果。结果将保存自config文件所配置的log路径中
     query:搜索关键字，如天安门
     tag:分类偏好，如美食
     regin:行政区域划分，如北京市
@@ -80,6 +80,9 @@ def GetSearch(query: str, tag: str, region: str = '北京市') -> any:
 
 
 def GetGeocode(location_lat: float, location_lng: float) -> str:
+    """本函数用于利用提供的经纬度获取相应的地理信息并返回格式化地址信息。详细结果将保存在config文件所配置的log路径中。\n
+    全球逆地理编码服务是一类Web API接口服务；逆地理编码服务提供将坐标点（经纬度）转换为对应位置信息（如所在行政区划，周边地标点分布）功能。服务同时支持全球行政区划位置描述及周边地标POI数据召回（包括中国在内的全球200多个国家地区）
+    """
 
     http = conf.getReverseGeocode
     output = conf.getOutput
@@ -96,4 +99,7 @@ def GetGeocode(location_lat: float, location_lng: float) -> str:
     if reJsoexinDict['status'] != 0:
         return '未查询到有效信息'
     else:
-        return reJsoexinDict['result']['addressComponent']['town']
+        with open(conf.getLog + 'GetGeocode_' + TimeStamp() + '.json', 'w') as file:
+            file.write(json.dumps(
+                reJsoexinDict['result'], ensure_ascii=False, sort_keys=False, indent=True))
+        return reJsoexinDict['result']['formatted_address']
