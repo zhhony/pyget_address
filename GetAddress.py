@@ -6,16 +6,16 @@ import pyjson_withcommit
 # 新增配置类，读取本地配置
 class Config:
     def __init__(self, configPath: str) -> None:
-        config = pyjson_withcommit.LoadJson(configPath)
-        self.__geocode = config['http']['geocode']
-        self.__suggestion = config['http']['suggestion']
-        self.__search = config['http']['search']
-        self.__reverse_geocode = config['http']['reverse_geocode']
-        self.__output = config['output']
-        self.__scope = config['scope']
-        self.__page_size = config['page_size']
-        self.__photo_show = config['photo_show']
-        self.__extensions_town = config['extensions_town']
+        CONFIG = pyjson_withcommit.LoadJson(configPath)
+        self.__geocode = CONFIG['http']['geocode']
+        self.__suggestion = CONFIG['http']['suggestion']
+        self.__search = CONFIG['http']['search']
+        self.__reverse_geocode = CONFIG['http']['reverse_geocode']
+        self.__output = CONFIG['output']
+        self.__scope = CONFIG['scope']
+        self.__page_size = CONFIG['page_size']
+        self.__photo_show = CONFIG['photo_show']
+        self.__extensions_town = CONFIG['extensions_town']
 
     @property
     def getGeocode(self):
