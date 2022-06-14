@@ -8,14 +8,15 @@ class Config:
         self.__geocode = CONFIG['http']['geocode']
         self.__suggestion = CONFIG['http']['suggestion']
         self.__search = CONFIG['http']['search']
-        self.__reverse_geocode = CONFIG['http']['reverse_geocode']
+        self.__reverseGeocode = CONFIG['http']['reverse_geocode']
         self.__output = CONFIG['output']
         self.__scope = CONFIG['scope']
-        self.__page_size = CONFIG['page_size']
-        self.__photo_show = CONFIG['photo_show']
+        self.__pageSize = CONFIG['page_size']
+        self.__photoShow = CONFIG['photo_show']
         self.__extensions_town = CONFIG['extensions_town']
         self.__ak = CONFIG['ak']
         self.__log = CONFIG['log']
+        self.__pageNum = CONFIG['page_num']
 
     @property
     def getGeocode(self) -> str:
@@ -31,7 +32,7 @@ class Config:
 
     @property
     def getReverseGeocode(self) -> str:
-        return self.__reverse_geocode
+        return self.__reverseGeocode
 
     @property
     def getOutput(self) -> str:
@@ -43,11 +44,11 @@ class Config:
 
     @property
     def getPageSize(self) -> str:
-        return self.__page_size
+        return self.__pageSize
 
     @property
     def getPhotoShow(self) -> str:
-        return self.__photo_show
+        return self.__photoShow
 
     @property
     def getExtensionsTown(self) -> str:
@@ -60,3 +61,7 @@ class Config:
     @property
     def getLog(self) -> str:
         return self.__log
+
+    @property
+    def getPageNum(self) -> str:
+        return self.__pageNum
