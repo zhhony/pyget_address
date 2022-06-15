@@ -74,5 +74,5 @@ class Config:
         return self.__driving
 
     @property
-    def getCartype(self) -> str:
+    def getCartype(self) -> int:
         return self.__cartype
