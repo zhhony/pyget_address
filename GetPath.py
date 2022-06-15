@@ -5,6 +5,9 @@ from . modules import *
 # 载入全局参数
 conf = Config('D:\\workdata\\pyget_address\\config.json')
 
+# 定义一个用于反馈API接口成功接入但是返回异常的错误类
+class PostError(Exception):
+    pass
 
 def getCarPath(plate_number: str, tactics: int, origin: tuple, destination: tuple, *waypoints: list):
     '''根据提供的信息获取驾车路线规划,并将详细信息存入config文件所定位的log文件夹中\n
@@ -42,16 +45,23 @@ def getCarPath(plate_number: str, tactics: int, origin: tuple, destination: tupl
     https = http + 'origin=' + originStr + '&destination=' + destinationStr + '&ak=' + ak + '&cartype=' + \
         str(cartype) + '&waypoints=' + waypointsStr + \
         '&plate_number=' + plate_number + '&tactics=' + str(tactics)
-
-    s = requests.session()
-    re = s.get(https)
-    reJson = re.text.encode('utf8')
-    reJsonDict = json.loads(reJson)
-    with open(conf.getLog + 'getCarPath_' + TimeStamp() + '.json', 'w') as file:
-                file.write(json.dumps(
-                    reJsonDict, ensure_ascii=False, sort_keys=False, indent=True))
-    return reJsonDict
-
+    try:
+        s = requests.session()
+        re = s.get(https)
+        reJson = re.text.encode('utf8')
+        reJsonDict = json.loads(reJson)
+        if reJsonDict['status']!=0:
+            raise PostError
+    except:
+        print('%API返回了错误的信息\n错误码：%s\n错误信息：%s'%(reJsonDict['status','message']))
+        return None
+    else:
+        with open(conf.getLog + 'getCarPath_' + TimeStamp() + '.json', 'w') as file:
+            file.write(json.dumps(
+                reJsonDict['result'], ensure_ascii=False, sort_keys=False, indent=True))
+        return reJsonDict['result']
+    finally:
+        pass
 
 # importlib.reload(pyget_address)
 # pyget_address.getCarPath('苏B37F34',3,(40.01116,116.339303),(39.936404,116.452562))
