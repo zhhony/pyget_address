@@ -7,7 +7,7 @@ conf = Config('D:\\workdata\\pyget_address\\config.json')
 
 
 def getCarPath(plate_number: str, tactics: int, origin: tuple, destination: tuple, *waypoints: list):
-    '''根据提供的信息获取驾车路线规划\n
+    '''根据提供的信息获取驾车路线规划,并将详细信息存入config文件所定位的log文件夹中\n
     plate_number：车牌号\n
     origin：起点经纬度\n
     destination：终点经纬度\n
@@ -36,16 +36,22 @@ def getCarPath(plate_number: str, tactics: int, origin: tuple, destination: tupl
         for index in range(len(waypoints)):
             waypoints[index] = ','.join([str(i) for i in waypoints[index]])
         waypointsStr = '|'.join(waypoints)
+    else:
+        waypointsStr = ''
 
     https = http + 'origin=' + originStr + '&destination=' + destinationStr + '&ak=' + ak + '&cartype=' + \
-        cartype + '&waypoints=' + waypointsStr + \
+        str(cartype) + '&waypoints=' + waypointsStr + \
         '&plate_number=' + plate_number + '&tactics=' + str(tactics)
 
     s = requests.session()
     re = s.get(https)
     reJson = re.text.encode('utf8')
     reJsonDict = json.loads(reJson)
+    with open(conf.getLog + 'getCarPath_' + TimeStamp() + '.json', 'w') as file:
+                file.write(json.dumps(
+                    reJsonDict, ensure_ascii=False, sort_keys=False, indent=True))
     return reJsonDict
 
 
-# getCarPath('苏B37F34',3,(40.01116,116.339303),(39.936404,116.452562))
+# importlib.reload(pyget_address)
+# pyget_address.getCarPath('苏B37F34',3,(40.01116,116.339303),(39.936404,116.452562))
