@@ -53,7 +53,7 @@ def getCarPath(plate_number: str, tactics: int, origin: tuple, destination: tupl
         if reJsonDict['status']!=0:
             raise PostError
     except:
-        print('%API返回了错误的信息\n错误码：%s\n错误信息：%s'%(reJsonDict['status','message']))
+        print('API返回了错误的信息\n错误码：%s\n错误信息：%s'%(reJsonDict['status'],reJsonDict['message']))
         return None
     else:
         with open(conf.getLog + 'getCarPath_' + TimeStamp() + '.json', 'w') as file:
